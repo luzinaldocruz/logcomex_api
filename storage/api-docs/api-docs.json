@@ -1,0 +1,148 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Pokémon",
+        "description": "The documentation of the Pokémon API.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/pokemon": {
+            "get": {
+                "tags": [
+                    "Pokémon List"
+                ],
+                "summary": "List paginated Pokémons",
+                "operationId": "d79c5d159e16c9963e038db7869a59d8",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Number of Pokémons to return per page",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number to fetch",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated list of Pokémons",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "description": "The current page number",
+                                            "type": "integer"
+                                        },
+                                        "total_pages": {
+                                            "description": "The total number of pages",
+                                            "type": "integer"
+                                        },
+                                        "total_pokemons": {
+                                            "description": "The total number of Pokémons",
+                                            "type": "integer"
+                                        },
+                                        "per_page": {
+                                            "description": "The number of Pokémons per page",
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "name": {
+                                                        "description": "The Pokémon's name",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/pokemon/{nameOrId}": {
+            "get": {
+                "tags": [
+                    "Pokemon Detail"
+                ],
+                "summary": "Get Pokemon Detail",
+                "operationId": "17dc175fd2e72abc50d81f9d078620b2",
+                "parameters": [
+                    {
+                        "name": "nameOrId",
+                        "in": "path",
+                        "description": "Name or ID of the Pokemon",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pokemon detail",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "types": {
+                                            "type": "string"
+                                        },
+                                        "height": {
+                                            "type": "number"
+                                        },
+                                        "weight": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Pokemon not found"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Pokémon List",
+            "description": "Pokémon List"
+        },
+        {
+            "name": "Pokemon Detail",
+            "description": "Pokemon Detail"
+        }
+    ]
+}
